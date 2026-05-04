@@ -29,15 +29,18 @@
 
 ---
 
-## Database Setup
+##Database Setup (Example)
 
 ### Source Table (left panel data)
 ```sql
-create table SHUTTLE_TEST (
-    ID      number primary key, --CITY ID
-    NAME    varchar2(200),
-    COUNTRY varchar2(100)
-);
+CREATE TABLE "SHUTTLE_TEST" 
+   (	"ID"      NUMBER NOT NULL ENABLE, --CITY ID
+    	"NAME"    VARCHAR2(500 CHAR), 
+	    "COUNTRY" VARCHAR2(100 CHAR)
+   ) ;
+  CREATE UNIQUE INDEX "SHUTTLE_TEST_PK" ON "SHUTTLE_TEST" ("ID");
+ALTER TABLE "SHUTTLE_TEST" ADD CONSTRAINT "SHUTTLE_TEST_PK" PRIMARY KEY ("ID")
+  USING INDEX "SHUTTLE_TEST_PK"  ENABLE;
 ```
 
 ### Target Table (saved selections)
@@ -46,6 +49,10 @@ create table MYTABLE_TEST (
     ID      number generated always as identity primary key,
     CITY_ID number
 );
+CREATE UNIQUE INDEX "MYTABLE_TEST_PK" ON "MYTABLE_TEST" ("ID");
+ALTER TABLE "MYTABLE_TEST" ADD CONSTRAINT "MYTABLE_TEST_PK" PRIMARY KEY ("ID")
+  USING INDEX "MYTABLE_TEST_PK"  ENABLE;
+
 ```
 > The target table PK is filled automatically by sequence/identity — no PK column attribute needed.
 
