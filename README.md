@@ -27,6 +27,7 @@
 - **Labels Position** — display labels above or below the shuttle panels
 - **Parent Item(s)** — submit page item values (e.g. P6_COUNTRY) with every AJAX call so :BIND variables in Source Where Clause resolve correctly
 - **RTL support** — layout works correctly in right-to-left pages
+- **Use MERGE Statement** - SAVE uses MERGE INTO the target table: inserts new rows (WHEN NOT MATCHED) then deletes rows no longer in the right panel (DELETE WHERE FK NOT IN collection). 
 
 ---
 
@@ -89,6 +90,9 @@ ALTER TABLE "MYTABLE_TEST" ADD CONSTRAINT "MYTABLE_TEST_PK" PRIMARY KEY ("ID")
 | 15 | Target Table Name | Table storing saved selections (e.g. `MYTABLE_TEST`) |
 | 16 | Target Foreign Key Column | FK column in target table (e.g. `CITY_ID`) |
 | 17 | Target Where Clause | Optional WHERE clause scoping target table operations |
+| 18 | Use MERGE Statement | SAVE uses MERGE INTO the target table: inserts new rows (WHEN NOT MATCHED) then deletes rows no longer in the right panel (DELETE WHERE FK NOT IN collection). When No: deletes all rows then re-inserts. |
+| 19 | Allow Add Row | MOVE and MOVE ALL buttons are rendered. When No, these buttons are hidden and users cannot move items to the right panel. |
+| 20 | Allow Delete Row | REMOVE and REMOVE ALL buttons are rendered. When No, these buttons are hidden and users cannot move items back to the left panel. |
 
 ---
 
@@ -154,3 +158,6 @@ apexrad.superShuttleItem.save('P6_MY_SHUTTLE', function(data) {
 - Three right panel count labels (Count / Selected Count / Saved Count)
 - Labels Position (top/bottom)
 - Maximum Move limit with custom error message
+- Use MERGE Statement
+- Allow Add Row
+- Allow Delete Row
