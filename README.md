@@ -10,8 +10,6 @@
 
 ## Features
 
-- **Collection-based right panel** — uses `APEXRAD_SUPERSHUTTLEITEM` APEX collection as the temporary container for selected items
-- **Dynamic LOV SQL** — generated automatically from Source Table, Return Column, Display Column, and Where Clause attributes — no manual SQL required
 - **Color-coded items** — blue for items already saved in the target table, red italic for newly moved (unsaved) items
 - **Real-time count labels** — Count, Selected Count, and Saved Count labels above (or below) each panel
 - **Filter bar** — optional text filter above the left panel with configurable placeholder
@@ -36,7 +34,7 @@
 ### Source Table (left panel data)
 ```sql
 create table SHUTTLE_TEST (
-    ID      number primary key,
+    ID      number primary key, --CITY ID
     NAME    varchar2(200),
     COUNTRY varchar2(100)
 );
