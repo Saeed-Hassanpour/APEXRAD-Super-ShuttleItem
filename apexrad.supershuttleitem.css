@@ -1,0 +1,51 @@
+/* APEXRAD Super Shuttle Item - v24.2.0 */
+
+/* Count labels */
+.apexrad-ssi-count-label {
+    color: var(--ut-palette-danger, #ff0000);
+    font-weight: 600;
+}
+
+/* Saved rows in right panel - blue */
+.apexrad-ssi-saved {
+    color: var(--ut-palette-primary, #4696fc);
+}
+
+/* Newly moved rows (not yet saved) - red italic */
+.apexrad-ssi-new {
+    color: #ff2828;
+    font-style: italic;
+}
+
+/* Filter row */
+.apexrad-ssi-filter-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: .4em;
+}
+
+.apexrad-ssi-filter-row input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Count spans */
+.shuttleControl1-count,
+.shuttleControl2-count {
+    font-size: .875em;
+    color: var(--ut-component-text-muted-color, #555);
+    padding-bottom: .25em;
+    line-height: 1.4;
+}
+
+.shuttleControl-count {
+    display: block;
+    height: 1.4em;
+}
+
+/* Loading overlay - single spinner */
+.apexrad-ssi-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.6;
+}
