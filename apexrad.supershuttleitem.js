@@ -70,7 +70,9 @@ var apexrad = apexrad || {};
                 savedCountLabel : 'Saved Count',
                 newCountLabel   : 'Selected Count',
                 savedColorClass : 'apexrad-ssi-saved',
-                countLabelClass : 'apexrad-ssi-count-label'
+                countLabelClass : 'apexrad-ssi-count-label',
+                allowAdd        : true,
+                allowDel        : true
             };
             var opts = $.extend({}, defaults, pOptions);
 
@@ -126,8 +128,16 @@ var apexrad = apexrad || {};
             html += '</td>';
             // Control buttons
             html += '<td align="center" class="shuttleControl"><span class="shuttleControl-count">&nbsp;</span>';
-            [['RESET','Reset','reset'],['MOVE_ALL','Move All','move-all'],['MOVE','Move','move'],
-             ['REMOVE','Remove','remove'],['REMOVE_ALL','Remove All','remove-all']].forEach(function(b){
+            var buttons = [['RESET','Reset','reset']];
+            if (opts.allowAdd) {
+                buttons.push(['MOVE_ALL','Move All','move-all']);
+                buttons.push(['MOVE','Move','move']);
+            }
+            if (opts.allowDel) {
+                buttons.push(['REMOVE','Remove','remove']);
+                buttons.push(['REMOVE_ALL','Remove All','remove-all']);
+            }
+            buttons.forEach(function(b){
                 html += '<button id="' + pItemId + '_' + b[0] + '"';
                 html += ' class="a-Button a-Button--noLabel a-Button--withIcon a-Button--small a-Button--noUI a-Button--shuttle"';
                 html += ' type="button" title="' + b[1] + '" aria-label="' + b[1] + '">';
@@ -401,8 +411,11 @@ var apexrad = apexrad || {};
                 saveData: function(callbackFn) {
                     _call('SAVE', pItemId, '', '', '', function(data) {
                         if (typeof callbackFn === 'function') { callbackFn(data); }
-                        // Refresh right panel + labels after save
+                        // After save: clear right panel immediately (no flicker)
+                        // then reload from DB to reflect exact saved state
                         if (!data || !data.error) {
+                            rightSel.length = 0;
+                            _updateLabels(0, 0, 0);
                             _loadSaved();
                         }
                     });
