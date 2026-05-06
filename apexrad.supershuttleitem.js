@@ -228,6 +228,7 @@ var apexrad = apexrad || {};
                     opts.ajaxIdentifier,
                     { x01: x01, x02: x02, x03: x03, x04: x04, x05: _x05(), x06: x06 },
                     {
+                        pageItems: opts.pageItems ? '#' + opts.pageItems.trim().replace(/,\s*/g, ',#') : undefined,
                         success: function(data) {
                             lSpinner$.remove();
                             onSuccess(data);
