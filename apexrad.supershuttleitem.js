@@ -84,7 +84,6 @@ var apexrad = apexrad || {};
             var filterBtnId = pfx + '_FILTER_BTN';
             var filterClrId = pfx + '_FILTER_CLEAR';
 
-            // Find the hidden select rendered by the plugin (APEX item node)
             var apexItemNode = apex.item(pItemId) ? apex.item(pItemId).node : null;
             if (!apexItemNode) {
                 apexItemNode = document.getElementById(pItemId);
@@ -94,7 +93,6 @@ var apexrad = apexrad || {};
                 return;
             }
 
-            // Anchor for inserting shuttle HTML: parent of the hidden select
             var anchorEl  = apexItemNode.parentElement || apexItemNode;
             var inputName = apexItemNode.name || '';
 
@@ -210,7 +208,6 @@ var apexrad = apexrad || {};
                 }
             }
 
-
             function _x05() {
                 if (!opts.pageItems) { return ''; }
                 var items = opts.pageItems.split(',');
@@ -228,7 +225,6 @@ var apexrad = apexrad || {};
                     opts.ajaxIdentifier,
                     { x01: x01, x02: x02, x03: x03, x04: x04, x05: _x05(), x06: x06 },
                     {
-                        pageItems: opts.pageItems ? '#' + opts.pageItems.trim().replace(/,\s*/g, ',#') : undefined,
                         success: function(data) {
                             lSpinner$.remove();
                             onSuccess(data);
@@ -236,6 +232,14 @@ var apexrad = apexrad || {};
                         error: function(xhr, status, err) {
                             lSpinner$.remove();
                             apex.debug.error('APEXRAD SSI ' + x01 + ':', status, err);
+                            var msg = 'An error occurred. Please try again.';
+                            if (status === 'timeout') {
+                                msg = 'Request timed out. Please try again.';
+                            } else if (xhr && xhr.status === 401) {
+                                msg = 'Session expired. Please refresh the page.';
+                            }
+                            apex.message.clearErrors();
+                            apex.message.showErrors([{type:'error', location:'page', message: msg}]);
                         }
                     }
                 );
@@ -296,7 +300,6 @@ var apexrad = apexrad || {};
                     apex.message.showErrors([{type:'error',location:'page',message:msg}]);
                     return;  // Move NOTHING
                 }
-                // Build pipe-sep chr(1)-delimited RET:DISP pairs
                 var pairs = selected.map(function(o){
                     return o.value + String.fromCharCode(1) + o.text;
                 }).join('|');
@@ -352,7 +355,6 @@ var apexrad = apexrad || {};
             function _reorder() {
                 var vals = Array.from(rightSel.options).map(function(o){ return o.value; }).join('|');
                 _call('REORDER', pItemId, '', vals, '', function(data) {
-                    // No UI update needed - order already shown in DOM
                 });
             }
 
@@ -379,9 +381,6 @@ var apexrad = apexrad || {};
                     }
                 }
                 _updateLabels();
-                // Note: _reorder() deliberately NOT called here.
-                // Collection order is synced only on SAVE.
-                // This prevents unnecessary AJAX on every sort click.
             }
 
             // ── Wire buttons ──────────────────────────────────────────────
@@ -410,7 +409,7 @@ var apexrad = apexrad || {};
             // ── Instance registry ─────────────────────────────────────────
             apexrad.superShuttleItem._instances[pItemId] = {
                 saveData: function(callbackFn) {
-                    _call('SAVE', pItemId, '', '', '', function(data) {
+                    _call('SAVE', pItemId, '', '', String(rightSel.length), function(data) {
                         if (typeof callbackFn === 'function') { callbackFn(data); }
                         // After save: clear right panel immediately (no flicker)
                         // then reload from DB to reflect exact saved state
