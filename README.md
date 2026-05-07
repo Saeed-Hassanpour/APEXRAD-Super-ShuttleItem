@@ -67,6 +67,7 @@ ALTER TABLE "MYTABLE_TEST" ADD CONSTRAINT "MYTABLE_TEST_PK" PRIMARY KEY ("ID")
 ```
 > The target table PK is filled automatically by sequence/identity — no PK column attribute needed.
 
+### Import sql file `shuttle_sample_dateset.xlsx`
 ---
 
 ## Plugin Attributes
