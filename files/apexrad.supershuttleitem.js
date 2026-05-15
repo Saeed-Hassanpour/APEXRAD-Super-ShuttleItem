@@ -219,30 +219,42 @@ var apexrad = apexrad || {};
                 return pairs.join('|');
             }
 
+            // Serialize all AJAX operations to avoid race conditions
+            // between ADD/REMOVE/REORDER and SAVE.
+            var _rq = $.Deferred().resolve();
+
             function _call(x01, x02, x03, x04, x06, onSuccess) {
-                var lSpinner$ = apex.util.showSpinner($('#' + containerId));
-                apex.server.plugin(
-                    opts.ajaxIdentifier,
-                    { x01: x01, x02: x02, x03: x03, x04: x04, x05: _x05(), x06: x06 },
-                    {
-                        success: function(data) {
-                            lSpinner$.remove();
-                            onSuccess(data);
-                        },
-                        error: function(xhr, status, err) {
-                            lSpinner$.remove();
-                            apex.debug.error('APEXRAD SSI ' + x01 + ':', status, err);
-                            var msg = 'An error occurred. Please try again.';
-                            if (status === 'timeout') {
-                                msg = 'Request timed out. Please try again.';
-                            } else if (xhr && xhr.status === 401) {
-                                msg = 'Session expired. Please refresh the page.';
+                _rq = _rq.then(function() {
+                    var d = $.Deferred();
+                    var lSpinner$ = apex.util.showSpinner($('#' + containerId));
+                    apex.server.plugin(
+                        opts.ajaxIdentifier,
+                        { x01: x01, x02: x02, x03: x03, x04: x04, x05: _x05(), x06: x06 },
+                        {
+                            success: function(data) {
+                                lSpinner$.remove();
+                                if (typeof onSuccess === 'function') {
+                                    onSuccess(data);
+                                }
+                                d.resolve();
+                            },
+                            error: function(xhr, status, err) {
+                                lSpinner$.remove();
+                                apex.debug.error('APEXRAD SSI ' + x01 + ':', status, err);
+                                var msg = 'An error occurred. Please try again.';
+                                if (status === 'timeout') {
+                                    msg = 'Request timed out. Please try again.';
+                                } else if (xhr && xhr.status === 401) {
+                                    msg = 'Session expired. Please refresh the page.';
+                                }
+                                apex.message.clearErrors();
+                                apex.message.showErrors([{type:'error', location:'page', message: msg}]);
+                                d.resolve();
                             }
-                            apex.message.clearErrors();
-                            apex.message.showErrors([{type:'error', location:'page', message: msg}]);
                         }
-                    }
-                );
+                    );
+                    return d.promise();
+                });
             }
 
             // ── Populate right panel from server response ──────────────────
@@ -409,7 +421,8 @@ var apexrad = apexrad || {};
             // ── Instance registry ─────────────────────────────────────────
             apexrad.superShuttleItem._instances[pItemId] = {
                 saveData: function(callbackFn) {
-                    _call('SAVE', pItemId, '', '', String(rightSel.length), function(data) {
+                    var vals = Array.from(rightSel.options).map(function(o){ return o.value; }).join('|');
+                    _call('SAVE', pItemId, '', vals, String(rightSel.length), function(data) {
                         if (typeof callbackFn === 'function') { callbackFn(data); }
                         // After save: clear right panel immediately (no flicker)
                         // then reload from DB to reflect exact saved state
