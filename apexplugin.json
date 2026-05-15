@@ -1,0 +1,34 @@
+{
+  "name" : "APEXRAD Super Shuttle Item",
+  "version" : "24.2.0",
+  "description" : "APEXRAD Super Shuttle Item",
+  "keywords" : ["Super Shuttle Item"],
+  "homepage" : "https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem",
+  "bugs" : {
+    "url" : "https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem/issues",
+    "email" : "mr.saeedhassanpour@gmail.com"
+  },
+  "license" : "MIT",
+  "author" : {
+    "name" : "Saeed Hassanpour",
+    "email" : "mr.saeedhassanpour@gmail.com",
+    "url" : "https://saeedhassanpour.blogspot.com",
+    "twitter" : "@HassanpourSaeed"
+  },
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem.git"
+  },
+ "oracle" : {
+    "versions" : ["19C", "23ai", "26ai"],
+    "apex" : {
+      "versions" : ["24.2.0", "26.1", "26.2"],
+      "plugin" : {
+        "internalName" : "INFO.APEXRAD.SUPERSCHUTTLEITEM",
+        "type" : "item",
+        "demo" : "https://oracleapex.com/ords/r/saeedhassanpour/oac/super-shuttle-item-plugin?",
+        "previewImage" : "https://raw.githubusercontent.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem/master/SuperShuttelItemPlugin.gif"
+      }
+    }
+  }
+}
