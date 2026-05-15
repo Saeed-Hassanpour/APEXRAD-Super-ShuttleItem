@@ -1,7 +1,7 @@
 {
   "name" : "APEXRAD Super Shuttle Item",
   "version" : "24.2.0",
-  "description" : "APEXRAD Super Shuttle Item",
+  "description" : "A feature-rich shuttle component plugin for Oracle APEX 24.2+ with collection-based selection, dynamic generation, and real-time count labels.",
   "keywords" : ["Super Shuttle Item"],
   "homepage" : "https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem",
   "bugs" : {
@@ -9,11 +9,11 @@
     "email" : "mr.saeedhassanpour@gmail.com"
   },
   "license" : "MIT",
+  "commercial" : "No",
   "author" : {
     "name" : "Saeed Hassanpour",
     "email" : "mr.saeedhassanpour@gmail.com",
-    "url" : "https://saeedhassanpour.blogspot.com",
-    "twitter" : "@HassanpourSaeed"
+    "url" : "https://saeedhassanpour.blogspot.com"
   },
   "repository" : {
     "type" : "git",
