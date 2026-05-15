@@ -8,7 +8,7 @@
 
 ---
 
-![](https://raw.githubusercontent.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem/main/SuperShuttelItemPlugin.gif)
+![](https://raw.githubusercontent.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem/refs/heads/main/SuperShuttelItemPlugin.gif)
 
 ![](https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem/blob/main/images/Super-ShuttleItem-setting.png)
 
