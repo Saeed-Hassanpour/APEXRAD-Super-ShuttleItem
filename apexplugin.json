@@ -20,7 +20,7 @@
     "url" : "https://github.com/Saeed-Hassanpour/APEXRAD-Super-ShuttleItem.git"
   },
  "oracle" : {
-    "versions" : ["19C", "23ai", "26ai"],
+    "versions" : ["19c", "23ai", "26ai"],
     "apex" : {
       "versions" : ["24.2.0", "26.1", "26.2"],
       "plugin" : {
